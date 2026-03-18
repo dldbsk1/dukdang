@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 
-public class post {
+public class TradePost {
 
     // id - primary key
     @Id
@@ -50,7 +50,43 @@ public class post {
     @ColumnDefault("0")
     private int viewCount;
 
+    // 게시글 생성 시간
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime postTime;
+
+    // 게시글 생성 메서드
+    public static TradePost create(User seller, String title, String description,
+                                   int price, Category category, String imageUrl) {
+        TradePost post = new TradePost();
+        post.seller = seller;
+        post.title = title;
+        post.description = description;
+        post.price = price;
+        post.category = category;
+        post.imageUrl = imageUrl;
+        post.status = TradeStatus.SALE;
+        post.viewCount = 0;
+
+        return post;
+    }
+
+    // 게시글 수정
+    public void update(String title, String description, int price, Category category, String imageUrl) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.imageUrl = imageUrl;
+    }
+
+    // 판매 상태 변경
+    public void changeStatus(TradeStatus status) {
+        this.status = status;
+    }
+
+    // 조회수 증가 캡슐화
+    public void addViewCount() {
+        this.viewCount++;
+    }
 }
