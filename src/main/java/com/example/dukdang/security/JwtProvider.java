@@ -1,28 +1,42 @@
-package com.example.dukdang.security; // 패키지 경로는 프로젝트에 맞게 수정
+package com.example.dukdang.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
 @Component
 public class JwtProvider {
-    // 토큰 암호화에 사용할 비밀키 (실제로는 환경변수 등에 숨겨야 함)
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    // 토큰 유효 시간 (예: 1시간)
-    private final long tokenExpiration = 3600000L;
+
+    // 1. application.properties에서 값을 가져옵니다.
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    @Value("${jwt.expiration}")
+    private long tokenExpiration;
+
+    private Key key;
+
+    // 2. 객체 생성 후 비밀키를 초기화합니다.
+    @PostConstruct
+    protected void init() {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
 
     // 토큰 생성 메서드
     public String createToken(String email) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(email) // 토큰 주인 (이메일)
-                .setIssuedAt(now)  // 발행 시간
-                .setExpiration(new Date(now.getTime() + tokenExpiration)) // 만료 시간
-                .signWith(key)     // 암호화 알고리즘과 키
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + tokenExpiration))
+                .signWith(key, SignatureAlgorithm.HS256) // 알고리즘 명시
                 .compact();
     }
 }
