@@ -1,9 +1,4 @@
-//  플러스버튼 (민진)
-//  AddView.swift
-//  Dukdang
-//
-//  Created by mac16 on 3/16/26.
-//
+
 
 import SwiftUI
 
@@ -65,7 +60,7 @@ struct AddView: View {
                                 .font(.system(size: 15))
                                 .frame(minHeight: 150)
                                 .padding(8)
-                                // !!핵심: 배경을 숨겨야 밑에 있는 힌트 글자가 보임
+                            // !!핵심: 배경을 숨겨야 밑에 있는 힌트 글자가 보임
                                 .scrollContentBackground(.hidden)
                         }
                         .overlay(
@@ -115,7 +110,7 @@ struct AddView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 55)
-                        .background(Color.orange) 
+                        .background(Color.orange)
                         .cornerRadius(12)
                         .padding()
                 }
@@ -126,9 +121,9 @@ struct AddView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-#Preview {
-    NavigationStack {
-        AddView()
-    }
+    #Preview {
+        NavigationStack {
+            AddView()
+        }
+    
 }
