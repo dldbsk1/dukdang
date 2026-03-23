@@ -90,6 +90,7 @@ public class TradePostService {
     public void delete(Long postId, User currentUser) {
         TradePost post = findPostOrThrow(postId);
         checkOwnership(post, currentUser);
+        wishListRepository.deleteByTradePost(post); // 찜 먼저 삭제
         postSearchRepository.delete(post);
     }
 

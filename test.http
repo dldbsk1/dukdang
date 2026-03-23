@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ### 게시글 작성 (토큰 필요)
 POST http://localhost:8080/trade-posts
-Authorization: Bearer {토큰붙여넣기}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 Content-Type: application/json
 
 {
@@ -40,27 +40,27 @@ GET http://localhost:8080/trade-posts?category=ELECTRONICS&page=0&size=10
 GET http://localhost:8080/trade-posts?keyword=아이폰&page=0&size=10
 
 ### 단건 조회
-GET http://localhost:8080/trade-posts/1
+GET http://localhost:8080/trade-posts/2
 
 ### 상태 변경 (예약중으로)
-PATCH http://localhost:8080/trade-posts/1/status?status=RESERVED
-Authorization: Bearer {토큰}
+PATCH http://localhost:8080/trade-posts/2/status?status=RESERVED
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 
 ### 찜 토글
-POST http://localhost:8080/trade-posts/1/wish
-Authorization: Bearer {토큰}
+POST http://localhost:8080/trade-posts/2/wish
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 
 ### 내 게시글 목록
 GET http://localhost:8080/trade-posts/my-posts
-Authorization: Bearer {토큰}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 
 ### 내 찜 목록
 GET http://localhost:8080/trade-posts/my-wishes
-Authorization: Bearer {토큰}
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 
 ### 게시글 수정
-PUT http://localhost:8080/trade-posts/1
-Authorization: Bearer {토큰}
+PUT http://localhost:8080/trade-posts/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
 Content-Type: application/json
 
 {
@@ -71,6 +71,10 @@ Content-Type: application/json
   "imageUrl": "https://example.com/img.jpg"
 }
 
+### 찜 삭제
+POST http://localhost:8080/trade-posts/1/wish
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
+
 ### 게시글 삭제
-DELETE http://localhost:8080/trade-posts/1
-Authorization: Bearer {토큰}
+DELETE http://localhost:8080/trade-posts/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI

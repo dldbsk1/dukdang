@@ -14,4 +14,5 @@ public interface WishListRepository extends JpaRepository<WishList, Long> {
     Optional<WishList> findByUserAndTradePost(User user, TradePost tradePost);
     List<WishList> findByUserOrderByPostTimeDesc(User user);
     long countByTradePost(TradePost tradePost);
+    void deleteByTradePost(TradePost tradePost);
 }
