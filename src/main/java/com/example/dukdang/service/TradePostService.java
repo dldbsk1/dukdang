@@ -113,7 +113,7 @@ public class TradePostService {
     // ── 내 게시글 목록 ─────────────────────────────────────────────
     @Transactional(readOnly = true)
     public List<TradePostListResponseDto> getMyPosts(User currentUser) {
-        return postSearchRepository.findBySellerOrderByCreatedAtDesc(currentUser)
+        return postSearchRepository.findBySellerOrderByPostTimeDesc(currentUser)
                 .stream()
                 .map(post -> TradePostListResponseDto.from(post,
                         wishListRepository.countByTradePost(post)))
@@ -123,7 +123,7 @@ public class TradePostService {
     // ── 내 찜 목록 ─────────────────────────────────────────────────
     @Transactional(readOnly = true)
     public List<TradePostListResponseDto> getMyWishList(User currentUser) {
-        return wishListRepository.findByUserOrderByCreatedAtDesc(currentUser)
+        return wishListRepository.findByUserOrderByPostTimeDesc(currentUser)
                 .stream()
                 .map(wish -> TradePostListResponseDto.from(wish.getTradePost(),
                         wishListRepository.countByTradePost(wish.getTradePost())))

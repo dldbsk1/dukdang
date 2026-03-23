@@ -1,6 +1,6 @@
 package com.example.dukdang.repository;
 
-import org.apache.catalina.User;
+import com.example.dukdang.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

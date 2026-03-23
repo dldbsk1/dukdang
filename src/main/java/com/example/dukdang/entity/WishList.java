@@ -1,9 +1,8 @@
 package com.example.dukdang.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,13 +12,13 @@ import java.time.LocalDateTime;
 @Table(
         name = "wish_lists",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "trade_post_id"})
-        // 두 번 찜하기 방지
+        // DB 레벨에서 같은 유저가 같은 글을 두 번 찜하는 걸 방지
 )
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-
 public class WishList {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
