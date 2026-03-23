@@ -31,11 +31,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/trade-posts", "/trade-posts/*").permitAll()
                         // 인증/Swagger는 누구나
                         .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // WebSocket 연결 엔드포인트 허용
+                        .requestMatchers("/ws-chat/**").permitAll()
                         // 나머지는 로그인 필요
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

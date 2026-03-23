@@ -78,3 +78,39 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZ
 ### 게시글 삭제
 DELETE http://localhost:8080/trade-posts/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NzQyNTUwOTEsImV4cCI6MTc3NDM0MTQ5MX0.Yqu00cQH6cehsaV320rGY2pG4rfVhUFBwbzVUh84dkI
+
+### 채팅 테스트
+
+### 채팅 전 준비 (Rest API)
+### 회원가입
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "email": "buyer@test.com",
+  "password": "1234",
+  "nickname": "구매자"
+}
+
+### 1. 로그인 (구매자)
+### 로그인 → 토큰 복사
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "buyer@test.com",
+  "password": "1234"
+}
+
+### 2. 채팅방 생성 or 입장 ("채팅하기" 버튼)
+POST http://localhost:8080/chat/rooms/trade-posts/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllckB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzc0MjU5NDkxLCJleHAiOjE3NzQzNDU4OTF9.Xh8AMcSJB95DfqyMU1zfRj5BH8iyr9iDv9x8caPM-7g
+# 응답: { roomId: 1, otherUserNickname: "판매자", ... }
+
+### 3. 이전 메시지 불러오기
+GET http://localhost:8080/chat/rooms/1/messages
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllckB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzc0MjU5NDkxLCJleHAiOjE3NzQzNDU4OTF9.Xh8AMcSJB95DfqyMU1zfRj5BH8iyr9iDv9x8caPM-7g
+
+### 4. 내 채팅 목록
+GET http://localhost:8080/chat/rooms
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllckB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzc0MjU5NDkxLCJleHAiOjE3NzQzNDU4OTF9.Xh8AMcSJB95DfqyMU1zfRj5BH8iyr9iDv9x8caPM-7g
