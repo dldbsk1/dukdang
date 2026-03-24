@@ -28,7 +28,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // 게시글 목록/단건 조회는 비로그인도 허용
-                        .requestMatchers(HttpMethod.GET, "/trade-posts", "/trade-posts/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/trade-posts", "/trade-posts/*", "/auctions").permitAll()
                         // 인증/Swagger는 누구나
                         .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // WebSocket 연결 엔드포인트 허용

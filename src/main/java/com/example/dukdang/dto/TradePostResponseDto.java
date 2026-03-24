@@ -20,11 +20,11 @@ public class TradePostResponseDto {
     private String sellerNickname;
     private Long sellerId;
     private int viewCount;
-    private long wishCount;
+    private long likeCount;
     private boolean isWished;        // 내가 찜했는지 여부
     private LocalDateTime postTime;
 
-    public static TradePostResponseDto from(TradePost post, long wishCount, boolean isWished) {
+    public static TradePostResponseDto from(TradePost post, long likeCount, boolean isWished) {
         return new TradePostResponseDto(
                 post.getId(),
                 post.getTitle(),
@@ -36,7 +36,7 @@ public class TradePostResponseDto {
                 post.getSeller().getNickname(),
                 post.getSeller().getId(),
                 post.getViewCount(),
-                wishCount,
+                likeCount,
                 isWished,
                 post.getPostTime()
         );

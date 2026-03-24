@@ -18,10 +18,10 @@ public class TradePostListResponseDto {
     private String imageUrl;
     private String sellerNickname;
     private int viewCount;
-    private long wishCount;
+    private long likeCount;
     private LocalDateTime postTime;
 
-    public static TradePostListResponseDto from(TradePost post, long wishCount) {
+    public static TradePostListResponseDto from(TradePost post, long likeCount) {
         return new TradePostListResponseDto(
                 post.getId(),
                 post.getTitle(),
@@ -31,7 +31,7 @@ public class TradePostListResponseDto {
                 post.getImageUrl(),
                 post.getSeller().getNickname(),
                 post.getViewCount(),
-                wishCount,
+                likeCount,
                 post.getPostTime()
         );
     }

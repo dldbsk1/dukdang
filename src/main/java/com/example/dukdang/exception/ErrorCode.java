@@ -19,7 +19,14 @@ public enum ErrorCode {
     // 채팅
     CHAT_ROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "채팅방을 찾을 수 없습니다."),
     CHAT_FORBIDDEN(HttpStatus.FORBIDDEN, "채팅방 접근 권한이 없습니다."),
-    CANNOT_CHAT_WITH_SELF(HttpStatus.BAD_REQUEST, "자신의 게시글에는 채팅할 수 없습니다.");
+    CANNOT_CHAT_WITH_SELF(HttpStatus.BAD_REQUEST, "자신의 게시글에는 채팅할 수 없습니다."),
+
+    // 경매
+    AUCTION_NOT_FOUND(HttpStatus.NOT_FOUND, "경매를 찾을 수 없습니다."),
+    AUCTION_NOT_ACTIVE(HttpStatus.BAD_REQUEST, "진행 중인 경매가 아닙니다."),
+    BID_PRICE_TOO_LOW(HttpStatus.BAD_REQUEST, "현재 최고 입찰가보다 높게 입찰해야 합니다."),
+    CANNOT_BID_OWN_AUCTION(HttpStatus.BAD_REQUEST, "본인의 경매에는 입찰할 수 없습니다."),
+    AUCTION_NOT_ENDED(HttpStatus.BAD_REQUEST, "경매가 아직 종료되지 않았습니다.");
 
     private final HttpStatus status;
     private final String message;

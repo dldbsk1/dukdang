@@ -34,8 +34,8 @@ public class TradePostService {
         Page<TradePost> posts = postSearchRepository.search(category, keyword, pageable);
 
         return posts.map(post -> {
-            long wishCount = wishListRepository.countByTradePost(post);
-            return TradePostListResponseDto.from(post, wishCount);
+            long likeCount = wishListRepository.countByTradePost(post);
+            return TradePostListResponseDto.from(post, likeCount);
         });
     }
 
@@ -45,11 +45,11 @@ public class TradePostService {
         TradePost post = findPostOrThrow(postId);
         post.addViewCount();   // 변경 감지로 자동 UPDATE
 
-        long wishCount = wishListRepository.countByTradePost(post);
+        long likeCount = wishListRepository.countByTradePost(post);
         boolean isWished = currentUser != null &&
                 wishListRepository.existsByUserAndTradePost(currentUser, post);
 
-        return TradePostResponseDto.from(post, wishCount, isWished);
+        return TradePostResponseDto.from(post, likeCount, isWished);
     }
 
     // ── 게시글 작성 ────────────────────────────────────────────────
@@ -75,8 +75,8 @@ public class TradePostService {
                 dto.getPrice(), dto.getCategory(), dto.getImageUrl());
         // save() 없이도 @Transactional + dirty checking이 자동으로 UPDATE 날림
 
-        long wishCount = wishListRepository.countByTradePost(post);
-        return TradePostResponseDto.from(post, wishCount, false);
+        long likeCount = wishListRepository.countByTradePost(post);
+        return TradePostResponseDto.from(post, likeCount, false);
     }
 
     // ── 상태 변경 ──────────────────────────────────────────────────
