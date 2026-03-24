@@ -1,21 +1,25 @@
-
-
 import SwiftUI
 
 struct AddView: View {
+    
     @Environment(\.dismiss) private var dismiss
     
+    // 입력 상태 변수
     @State private var title: String = ""
     @State private var description: String = ""
-    @State private var originalPrice: String = ""
-    @State private var locationTag: String = ""
+    @State private var price: String = ""
     
+    // 모든 필드가 채워졌는지 확인하는 계산 속성
+    private var isFormValid: Bool {
+        !title.isEmpty && !price.isEmpty && !description.isEmpty
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
-                    // 카메라 버튼
+                    // 1. 카메라 버튼
                     Button(action: { }) {
                         VStack(spacing: 5) {
                             Image(systemName: "camera.fill").font(.system(size: 24))
@@ -30,7 +34,7 @@ struct AddView: View {
                     
                     Divider()
                     
-                    // 제목
+                    // 2. 제목 입력
                     VStack(alignment: .leading, spacing: 10) {
                         Text("제목")
                             .font(.system(size: 16, weight: .bold))
@@ -40,13 +44,25 @@ struct AddView: View {
                     
                     Divider()
                     
-                    // 자세한 설명 섹션
+                    // 3. 가격 입력
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("판매 가격")
+                            .font(.system(size: 16, weight: .bold))
+                        HStack {
+                            Text("₩").foregroundColor(.black)
+                            TextField("가격을 입력해주세요", text: $price)
+                                .keyboardType(.numberPad)
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    // 4. 자세한 설명
                     VStack(alignment: .leading, spacing: 10) {
                         Text("자세한 설명")
                             .font(.system(size: 16, weight: .bold))
                         
                         ZStack(alignment: .topLeading) {
-                            // 힌트 글자 (내용이 비어있을 때만 표시)
                             if description.isEmpty {
                                 Text("게시글 내용을 작성해주세요.")
                                     .font(.system(size: 15))
@@ -55,45 +71,16 @@ struct AddView: View {
                                     .padding(.vertical, 12)
                             }
                             
-                            // 입력창
                             TextEditor(text: $description)
                                 .font(.system(size: 15))
                                 .frame(minHeight: 150)
                                 .padding(8)
-                            // !!핵심: 배경을 숨겨야 밑에 있는 힌트 글자가 보임
                                 .scrollContentBackground(.hidden)
                         }
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                         )
-                    }
-                    
-                    Divider()
-                    
-                    // 원가
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("원가")
-                            .font(.system(size: 16, weight: .bold))
-                        HStack {
-                            Text("₩").foregroundColor(.black)
-                            TextField("가격을 입력해주세요", text: $originalPrice)
-                                .keyboardType(.numberPad)
-                        }
-                    }
-                    
-                    Divider()
-                    
-                    // 위치
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("위치")
-                            .font(.system(size: 16, weight: .bold))
-                        HStack(spacing: 5) {
-                            Text("#")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.orange)
-                            TextField("위치를 입력해주세요", text: $locationTag)
-                        }
                     }
                 }
                 .padding(20)
@@ -103,17 +90,22 @@ struct AddView: View {
             VStack {
                 Divider()
                 Button(action: {
-                    dismiss() // 화면 닫기
+                    if isFormValid {
+                        dismiss()
+                    }
                 }) {
                     Text("작성 완료")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 55)
-                        .background(Color.orange)
+                        //조건에 따라 버튼색 변경
+                        .background(isFormValid ? Color.blue : Color.gray)
                         .cornerRadius(12)
                         .padding()
                 }
+                // 조건에 따라 버튼 비활성화
+                .disabled(!isFormValid)
             }
             .background(Color.white)
         }
@@ -121,9 +113,9 @@ struct AddView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-    #Preview {
-        NavigationStack {
-            AddView()
-        }
-    
+
+#Preview {
+    NavigationStack {
+        AddView()
+    }
 }
