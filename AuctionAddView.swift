@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct AuctionAddView: View {
-    @Environment(\.dismiss) private var dismiss // 전으로 돌아가기
+    @Environment(\.dismiss) private var dismiss
     
+    // TradePostItem 구조체 및 경매 로직에 필요한 상태 변수들
     @State private var title: String = ""
     @State private var description: String = ""
-    @State private var startingPrice: String = "" // 시작가
-    @State private var locationTag: String = ""
+    @State private var startingPrice: String = ""
+    @State private var auctionEndTime: Date = Date().addingTimeInterval(3600 * 24) // 기본값: 현재로부터 24시간 후
+    
+    // 모든 필수 필드가 채워졌는지 확인 (시간은 기본값이 있으므로 제목, 설명, 가격 체크)
+    private var isFormValid: Bool {
+        !title.isEmpty && !description.isEmpty && !startingPrice.isEmpty
+    }
     
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
-                    // 카메라 버튼
+                    // 1. 이미지 선택
                     Button(action: { }) {
                         VStack(spacing: 5) {
                             Image(systemName: "camera.fill").font(.system(size: 24))
@@ -36,93 +42,95 @@ struct AuctionAddView: View {
                     
                     Divider()
                     
-                    // 제목
+                    // 2. 제목 입력
                     VStack(alignment: .leading, spacing: 10) {
                         Text("제목")
-                            .font(.system(size: 16, weight: .bold)) // 진한 글씨
+                            .font(.system(size: 16, weight: .bold))
                         TextField("경매 물품 제목을 입력해주세요", text: $title)
                             .font(.system(size: 16))
                     }
                     
                     Divider()
                     
+                    // 3. 시작가 입력
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("자세한 설명")
+                        Text("경매 시작가")
                             .font(.system(size: 16, weight: .bold))
-                        
-                        ZStack(alignment: .topLeading) {
-                            // 힌트 글자 (내용이 비어있을 때만 보임)
-                            if description.isEmpty {
-                                Text("경매 물품에 대한 자세한 설명을 적어주세요.")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.gray)
-                                    .padding(.horizontal, 16) // 커서 위치와 맞게 조절
-                                    .padding(.vertical, 16)
-                            }
-                            
-                            // 입력창
-                            TextEditor(text: $description)
-                                .font(.system(size: 15))
-                                .frame(minHeight: 150)
-                                .padding(8)
-                                // !!!핵심: TextEditor의 기본 하얀 배경을 투명하게 만듦
-                                .scrollContentBackground(.hidden)
-                        }
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                        )
-                    }
-                    
-                    Divider()
-                    
-                    // 시작가
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("시작가")
-                            .font(.system(size: 16, weight: .bold)) // 진한 글씨
                         HStack {
-                            Text("₩").foregroundColor(.black)
-                            TextField("경매를 시작할 가격을 입력해주세요", text: $startingPrice)
+                            Text("₩").bold()
+                            TextField("가격을 입력해주세요", text: $startingPrice)
                                 .keyboardType(.numberPad)
                         }
                     }
                     
                     Divider()
                     
-                    // 위치
+                    // 4. 마감 시간 설정
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("위치")
-                            .font(.system(size: 16, weight: .bold)) // 진한 글씨
-                        HStack(spacing: 5) {
-                            Text("#")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.red)
-                            TextField("위치를 입력해주세요", text: $locationTag)
+                        Text("경매 마감 시간")
+                            .font(.system(size: 16, weight: .bold))
+                        
+                        DatePicker(
+                            "마감 날짜 및 시간",
+                            selection: $auctionEndTime,
+                            in: Date()..., // 현재 시간 이전은 선택 불가
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                        .datePickerStyle(.compact) // 다이얼 및 캘린더 형태의 컴팩트 스타일
+                        .labelsHidden() // 레이블 숨기고 다이얼만 강조
+                    }
+                    
+                    Divider()
+                    
+                    // 5. 상세 설명
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("자세한 설명")
+                            .font(.system(size: 16, weight: .bold))
+                        
+                        ZStack(alignment: .topLeading) {
+                            if description.isEmpty {
+                                Text("경매 물품에 대한 자세한 설명을 적어주세요.")
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.gray)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 8)
+                            }
+                            
+                            TextEditor(text: $description)
+                                .font(.system(size: 15))
+                                .frame(minHeight: 150)
+                                .scrollContentBackground(.hidden)
                         }
                     }
                 }
                 .padding(20)
             }
             
-            // 작성 완료 버튼
+            // 작성 완료 버튼 영역
             VStack {
                 Divider()
                 Button(action: {
-                    dismiss() // 화면 닫기
+                    if isFormValid {
+                        // TODO: 여기서 TradePostItem 생성 로직 수행
+                        // auctionEndTime을 ISO8601 문자열로 변환하여 전달
+                        dismiss()
+                    }
                 }) {
-                    Text("작성 완료")
+                    Text("경매 등록하기")
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 55)
-                        .background(Color.red)
+                        // 버튼 배경색 변경
+                        .background(isFormValid ? Color.red : Color.gray)
                         .cornerRadius(12)
                         .padding()
                 }
+                .disabled(!isFormValid)
             }
             .background(Color.white)
         }
-        .navigationTitle("경매 물건 올리기") // 상단 탭 이름
+        .navigationTitle("경매 물건 올리기")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
