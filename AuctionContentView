@@ -49,7 +49,7 @@ struct AuctionContentView: View {
                             HStack {
                                 Text(item.category).font(.caption)
                                 Text("•")
-                                // ✅ 이제 postTime을 원래 용도(방금 전 등)로 사용 가능
+  
                                 Text(relativeTimeString(from: item.postTime)).font(.caption)
                             }
                             .foregroundColor(.secondary)
@@ -58,7 +58,7 @@ struct AuctionContentView: View {
                         Text("상품 설명이 들어가는 자리입니다. 실제 앱에서는 상세한 경매 규칙과 물품 상태를 적어주세요.")
                             .font(.body).padding(.vertical, 10)
                         
-                        // ✅ 수정된 타이머 섹션: item.endTime이 있을 때만 표시
+                        // 수정된 타이머 섹션: item.endTime이 있을 때만 표시
                         if let endTime = item.endTime, item.status == "RESERVED" {
                             HStack {
                                 Spacer()
@@ -73,7 +73,7 @@ struct AuctionContentView: View {
                             .background(Color.orange.opacity(0.08))
                             .cornerRadius(10)
                             .onReceive(timer) { _ in
-                                // ✅ item.endTime을 사용하여 타이머 갱신
+                                // item.endTime을 사용하여 타이머 갱신
                                 self.timeRemaining = calculateTimeRemaining(until: endTime)
                             }
                         }
@@ -128,7 +128,7 @@ struct AuctionContentView: View {
         .navigationTitle("상세 정보")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            // ✅ 초기화 시 endTime 사용
+            // 초기화 시 endTime 사용
             if let endTime = item.endTime {
                 self.timeRemaining = calculateTimeRemaining(until: endTime)
             }
@@ -138,7 +138,7 @@ struct AuctionContentView: View {
         }
     }
     
-    // ✅ 타이머 계산 로직 (endTime 기준)
+    // 타이머 계산 로직 (endTime 기준)
     private func calculateTimeRemaining(until dateString: String) -> String {
         let formatter = ISO8601DateFormatter()
         guard let endDate = formatter.date(from: dateString) else { return "시간 정보 없음" }
@@ -262,7 +262,7 @@ struct BidSheetView: View {
     }
 }
 
-// MARK: - 프리뷰 (endTime 포함)
+// MARK: - 프리뷰 
 #Preview {
     let formatter = ISO8601DateFormatter()
     // 현재 시간(올린 시간)과 내일 이 시간(마감 시간) 생성
