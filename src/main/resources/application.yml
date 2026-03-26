@@ -12,8 +12,12 @@ spring:
       hibernate:
         format_sql: true
 
+gemini:
+  api-key: ${GEMINI_API_KEY}
+  model: gemini-2.0-flash
+
 jwt:
-  secret: bXlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb24xMjM0NTY=
+  secret: bXlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlfadsfbmVyYXRpb24xMjM0NTY=
   expiration: 86400000
 
 springdoc:

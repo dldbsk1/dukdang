@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         // WebSocket 연결 엔드포인트 허용
                         .requestMatchers("/ws-chat/**").permitAll()
+                        // /ai 요청 로그인 시 허용
+                        .requestMatchers("/ai/**").authenticated()
                         // 나머지는 로그인 필요
                         .anyRequest().authenticated()
                 )

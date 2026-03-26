@@ -185,3 +185,43 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhdWN0aW9uQHRlc3QuY29tIiwic
 ### 8. 내 입찰 내역
 GET http://localhost:8080/auctions/1/my-bids
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJidXllckB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzc0MjY2MzI1LCJleHAiOjE3NzQzNTI3MjV9.KTiKUm-6ShK2Va41NdFzNLD0_WBhRU-F2B6GzKEju9I
+
+# AI
+### 회원가입
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+  "email": "ai1@test.com",
+  "password": "1234",
+  "nickname": "인공지능"
+}
+
+### 로그인 → 토큰 복사
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "ai1@test.com",
+  "password": "1234"
+}
+
+### 제목 + 본문으로 분류 (더 정확)
+POST http://localhost:8080/ai/category
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhaTFAdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3NDUzNTE5OCwiZXhwIjoxNzc0NjIxNTk4fQ.qwxvsN4IzJuZWCcWMmRawI0GKaGFts-gbJA11mvA6T29dBiOFZraSrrTWtiDULzS
+Content-Type: application/json
+
+{
+  "title": "팝니다",
+  "description": "트레킹화 260mm, 2회 착용, 박스 있음"
+}
+
+### 제목만으로 분류
+POST http://localhost:8080/ai/category
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhaTFAdGVzdC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3NDUzNTE5OCwiZXhwIjoxNzc0NjIxNTk4fQ.qwxvsN4IzJuZWCcWMmRawI0GKaGFts-gbJA11mvA6T29dBiOFZraSrrTWtiDULzS
+Content-Type: application/json
+
+{
+  "title": "맥북 에어 M3 15인치 스페이스 그레이"
+}
+
